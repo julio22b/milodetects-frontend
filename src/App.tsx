@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router';
 import { BottomNav } from '@/components/BottomNav';
+import { Toaster } from '@/components/ui/sonner';
 
 function App() {
     return (
@@ -7,6 +8,7 @@ function App() {
             <h1 className='text-lg font-bold'>MiloDetects</h1>
             <Outlet />
             <BottomNav />
+            <Toaster />
         </div>
     );
 }

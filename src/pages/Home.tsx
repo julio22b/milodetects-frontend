@@ -1,14 +1,25 @@
+import { useAppDispatch, useAppStore } from '@/app/hooks';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { clearImages } from '@/features/camera/cameraSlice';
 import { ROUTES } from '@/lib/constants';
 import { CameraIcon, ImagesIcon } from 'lucide-react';
+import { useEffect } from 'react';
 
 import { Link } from 'react-router';
 
 export function Home() {
+    const dispatch = useAppDispatch();
+    const store = useAppStore();
+
+    useEffect(() => {
+        store.getState().camera.images.forEach((image) => URL.revokeObjectURL(image));
+        dispatch(clearImages());
+    }, [dispatch, store]);
+
     return (
         <>
-            <h3 className='text-2xl font-bold'>Detect your milo</h3>
+            <h3 className='text-2xl font-bold'>MiloDetects</h3>
             <div className='flex gap-4'>
                 <Link
                     className='flex flex-1 flex-col items-center rounded-md px-4 py-8 bg-primary border-2 border-primary text-secondary font-bold'

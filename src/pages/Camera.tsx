@@ -1,12 +1,17 @@
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import GoBack from '@/components/GoBack';
 import { Button } from '@/components/ui/button';
-import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { CameraIcon, TrashIcon } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { addImage } from '@/features/camera/cameraSlice';
+import { ROUTES } from '@/lib/constants';
+import { ArrowRightIcon, ImagesIcon } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 const Camera = () => {
-    const [images, setImages] = useState<string[]>([]);
+    const images = useAppSelector((state) => state.camera.images);
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const streamRef = useRef<MediaStream | null>(null);
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -59,43 +64,47 @@ const Camera = () => {
         canvasRef.current.toBlob((blob) => {
             if (!blob) return;
 
-            setImages((prev) => [...prev, URL.createObjectURL(blob)]);
+            dispatch(addImage(URL.createObjectURL(blob)));
         });
     };
 
-    const handleRemoveImage = (image: string) => {
-        URL.revokeObjectURL(image);
-        setImages((prev) => prev.filter((img) => img !== image));
+    const handleReview = () => {
+        if (!images.length) {
+            toast.error('Please select at least one image');
+            return;
+        }
+        navigate(ROUTES.REVIEW);
     };
 
     return (
         <>
-            <video
-                ref={videoRef}
-                className='w-full h-[80svh] rounded-lg object-cover bg-black'
-                playsInline
-                muted
-                autoPlay
-            />
-            <Button onClick={handleCapture}>Camera</Button>
-            <canvas ref={canvasRef} className='hidden' />
-            <div className='flex flex-wrap gap-4'>
-                {images.map((image) => (
-                    <div className='relative' key={image}>
-                        <Button
-                            className='w-12 h-6 absolute inline-0 -right-3 -top-3 rounded-full text-center'
-                            variant='destructive'
-                            onClick={() => handleRemoveImage(image)}
-                        >
-                            <TrashIcon className='size-3' />
-                        </Button>
-                        <img src={image} alt='Image' className='w-16 h-16 object-cover rounded-md' />
-                    </div>
-                ))}
-                <p className='text-sm text-muted-foreground'>
-                    {images.length ? `You have selected ${images.length} image${images.length > 1 ? 's' : ''}` : ''}
-                </p>
+            <GoBack />
+            <div className='relative'>
+                <video
+                    ref={videoRef}
+                    className='w-full h-[80svh] rounded-lg object-cover bg-black'
+                    playsInline
+                    muted
+                    autoPlay
+                />
+                <div className='absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1.5 text-sm font-medium text-white backdrop-blur'>
+                    <ImagesIcon className='size-4' />
+                    {images.length}
+                </div>
+                <button
+                    type='button'
+                    onClick={handleCapture}
+                    aria-label='Take photo'
+                    className='group absolute bottom-6 left-1/2 flex size-16 -translate-x-1/2 items-center justify-center rounded-full border-4 border-white bg-transparent shadow-lg transition active:scale-95'
+                >
+                    <span className='size-12 rounded-full bg-white transition-all group-active:size-11' />
+                </button>
+                <Button className='absolute bottom-6 right-2 -translate-y-1/2' variant='outline' onClick={handleReview}>
+                    Review
+                    <ArrowRightIcon className='size-4' />
+                </Button>
             </div>
+            <canvas ref={canvasRef} className='hidden' />
         </>
     );
 };

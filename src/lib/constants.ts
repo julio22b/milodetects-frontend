@@ -3,6 +3,7 @@ export const ROUTES = {
     HISTORY: '/history',
     CAMERA: '/camera',
     REVIEW: '/review',
+    RESULTS: '/results',
 } as const;
 
 export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];

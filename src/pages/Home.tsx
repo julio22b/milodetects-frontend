@@ -13,7 +13,7 @@ export function Home() {
     const store = useAppStore();
 
     useEffect(() => {
-        store.getState().camera.images.forEach((image) => URL.revokeObjectURL(image));
+        store.getState().camera.images.forEach((image) => URL.revokeObjectURL(image.previewUrl));
         dispatch(clearImages());
     }, [dispatch, store]);
 

@@ -1,6 +1,6 @@
 import { CELL_META, CELL_ORDER } from '@/app/constants';
 import { useAppSelector } from '@/app/hooks';
-import type { AnalyzedImage, CellType } from '@/app/types';
+import type { CellType } from '@/app/types';
 import GoBack from '@/components/GoBack';
 import ImagesGallery from '@/components/ImagesGallery';
 import { Button } from '@/components/ui/button';
@@ -12,65 +12,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-// Self-contained mock microscopy field (inline SVG) so the page renders without a backend image.
-const MOCK_IMAGE = `data:image/svg+xml,${encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400">' +
-        '<rect width="400" height="400" fill="#171717"/>' +
-        '<defs>' +
-        '<radialGradient id="f" cx="50%" cy="50%" r="50%">' +
-        '<stop offset="0%" stop-color="#e88" stop-opacity="0.32"/>' +
-        '<stop offset="100%" stop-color="#e88" stop-opacity="0.08"/>' +
-        '</radialGradient>' +
-        '<pattern id="h" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
-        '<rect width="6" height="12" fill="#dc5a5a" fill-opacity="0.14"/>' +
-        '</pattern>' +
-        '</defs>' +
-        '<circle cx="200" cy="200" r="185" fill="url(#f)"/>' +
-        '<circle cx="200" cy="200" r="185" fill="url(#h)"/>' +
-        '</svg>',
-)}`;
-
-// TODO: placeholder field so the page renders standalone. Replace with the analyzed field from
-// the store once the results flow routes here.
-const MOCK_FIELD: AnalyzedImage = {
-    id: 'mock',
-    filename: 'mock.png',
-    status: 'ok',
-    content_type: 'image/png',
-    image_url: MOCK_IMAGE,
-    summary: { WBC: 3, RBC: 9, Platelet: 6 },
-    detections: [
-        { cell_type: 'WBC', confidence: 0.94, x: 0.12, y: 0.14, width: 0.15, height: 0.17 },
-        { cell_type: 'WBC', confidence: 0.88, x: 0.62, y: 0.55, width: 0.15, height: 0.17 },
-        { cell_type: 'WBC', confidence: 0.91, x: 0.4, y: 0.72, width: 0.15, height: 0.16 },
-        { cell_type: 'RBC', confidence: 0.86, x: 0.3, y: 0.12, width: 0.09, height: 0.09 },
-        { cell_type: 'RBC', confidence: 0.92, x: 0.55, y: 0.2, width: 0.09, height: 0.09 },
-        { cell_type: 'RBC', confidence: 0.83, x: 0.75, y: 0.33, width: 0.09, height: 0.09 },
-        { cell_type: 'RBC', confidence: 0.9, x: 0.2, y: 0.4, width: 0.09, height: 0.09 },
-        { cell_type: 'RBC', confidence: 0.81, x: 0.48, y: 0.44, width: 0.09, height: 0.09 },
-        { cell_type: 'RBC', confidence: 0.95, x: 0.68, y: 0.66, width: 0.09, height: 0.09 },
-        { cell_type: 'RBC', confidence: 0.87, x: 0.15, y: 0.68, width: 0.09, height: 0.09 },
-        { cell_type: 'RBC', confidence: 0.84, x: 0.34, y: 0.54, width: 0.09, height: 0.09 },
-        { cell_type: 'RBC', confidence: 0.79, x: 0.8, y: 0.78, width: 0.09, height: 0.09 },
-        { cell_type: 'Platelet', confidence: 0.6, x: 0.45, y: 0.3, width: 0.045, height: 0.045 },
-        { cell_type: 'Platelet', confidence: 0.72, x: 0.25, y: 0.26, width: 0.045, height: 0.045 },
-        { cell_type: 'Platelet', confidence: 0.88, x: 0.6, y: 0.4, width: 0.045, height: 0.045 },
-        { cell_type: 'Platelet', confidence: 0.65, x: 0.3, y: 0.82, width: 0.045, height: 0.045 },
-        { cell_type: 'Platelet', confidence: 0.83, x: 0.72, y: 0.18, width: 0.045, height: 0.045 },
-        { cell_type: 'Platelet', confidence: 0.7, x: 0.55, y: 0.8, width: 0.045, height: 0.045 },
-    ],
-};
-
 const Results = () => {
     const analyzedImages = useAppSelector((state) => state.camera.analyzedImages);
     const navigate = useNavigate();
-    const fields = analyzedImages.length ? analyzedImages : [MOCK_FIELD];
-    const [selectedFieldId, setSelectedFieldId] = useState<string>(fields[0].id);
+    const [selectedFieldId, setSelectedFieldId] = useState<string>(analyzedImages[0].id);
     const [shownCells, setShownCells] = useState<CellType[]>(CELL_ORDER);
     const [selectedCellIndex, setSelectedCellIndex] = useState<number | null>(null);
     const [note, setNote] = useState('');
 
-    const field = fields.find((f) => f.id === selectedFieldId) || fields[0];
+    const field = analyzedImages.find((img) => img.id === selectedFieldId) || analyzedImages[0];
 
     const cellCounts = field.detections.reduce(
         (acc, detection) => {
@@ -127,8 +77,9 @@ const Results = () => {
                             type='button'
                             onClick={() => setSelectedCellIndex(isSelected ? null : index)}
                             style={{
-                                left: `${detection.x * 100}%`,
-                                top: `${detection.y * 100}%`,
+                                // x/y are the box center, so shift back by half the box size.
+                                left: `${(detection.x - detection.width / 2) * 100}%`,
+                                top: `${(detection.y - detection.height / 2) * 100}%`,
                                 width: `${detection.width * 100}%`,
                                 height: `${detection.height * 100}%`,
                             }}
@@ -149,7 +100,7 @@ const Results = () => {
             </div>
 
             <ImagesGallery
-                images={fields.map((f) => ({ id: f.id, url: f.image_url }))}
+                images={analyzedImages.map(({ id, image_url }) => ({ id, url: image_url }))}
                 selectedId={selectedFieldId}
                 onSelect={setSelectedFieldId}
             />
@@ -207,7 +158,7 @@ const Results = () => {
                     Discard
                 </Button>
                 <Button className='h-12 text-white' onClick={() => navigate(ROUTES.CAMERA)}>
-                    Another analysis
+                    Analyze another
                 </Button>
             </div>
         </div>

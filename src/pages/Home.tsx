@@ -22,17 +22,17 @@ export function Home() {
             <h3 className='text-2xl font-bold'>MiloDetects</h3>
             <div className='flex gap-4'>
                 <Link
-                    className='flex flex-1 flex-col items-center rounded-md px-4 py-8 bg-primary border-2 border-primary text-secondary font-bold'
+                    className='flex flex-1 flex-col items-center justify-center rounded-md bg-primary border-2 border-primary text-white font-bold'
                     to={ROUTES.CAMERA}
                 >
-                    <CameraIcon className='size-12 text-secondary' />
+                    <CameraIcon className='size-12 text-white' />
                     Take a picture
                 </Link>
                 <Button
-                    className='flex flex-1 flex-col px-6 py-12 border-2 border-primary text-primary'
+                    className='flex flex-1 flex-col py-10 justify-center border-2 border-primary text-primary font-bold h-full'
                     variant='outline'
                 >
-                    <ImagesIcon className='size-6' />
+                    <ImagesIcon className='size-12' />
                     Choose from gallery
                 </Button>
             </div>

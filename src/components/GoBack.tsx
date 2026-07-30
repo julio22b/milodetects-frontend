@@ -5,18 +5,27 @@ import { useNavigate, useLocation } from 'react-router';
 
 interface GoBackProps {
     secondaryText?: string;
+    redirectHome?: boolean;
 }
 
-const GoBack = ({ secondaryText }: GoBackProps) => {
+const GoBack = ({ secondaryText, redirectHome = false }: GoBackProps) => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const canGoBack = pathname !== ROUTES.HOME;
     const title = pathname.replace('/', '').charAt(0).toUpperCase() + pathname.replace('/', '').slice(1);
 
+    const handleGoBack = () => {
+        if (redirectHome) {
+            navigate(ROUTES.HOME);
+        } else {
+            navigate(-1);
+        }
+    };
+
     return (
         <header className='flex items-center gap-2'>
             {canGoBack && (
-                <Button variant='ghost' size='icon' onClick={() => navigate(-1)} aria-label='Go back'>
+                <Button variant='ghost' size='icon' onClick={handleGoBack} aria-label='Go back'>
                     <ArrowLeftIcon className='size-5' />
                 </Button>
             )}

@@ -1,6 +1,6 @@
 import type { AnalysisStatus, AnalyzedImage, CapturedImage } from '@/app/types';
+import { api } from '@/api/client';
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { toast } from 'sonner';
 
 export interface CameraState {
@@ -19,7 +19,7 @@ const initialState: CameraState = {
 
 export const analyzeImages = createAsyncThunk('camera/analyzeImages', async (formData: FormData, thunkAPI) => {
     try {
-        const response = await axios.post('http://localhost:8000/analyze', formData, {
+        const response = await api.post('/analyze', formData, {
             onUploadProgress: (event) => {
                 const percent = event.total ? Math.round((event.loaded / event.total) * 100) : 0;
                 thunkAPI.dispatch(setUploadProgress(percent));
@@ -63,8 +63,6 @@ const cameraSlice = createSlice({
             state.status = 'idle';
             state.uploadProgress = 0;
             state.analyzedImages = action.payload;
-            state.images.forEach((image) => URL.revokeObjectURL(image.previewUrl));
-            state.images = [];
         });
         builder.addCase(analyzeImages.rejected, (state) => {
             state.status = 'error';

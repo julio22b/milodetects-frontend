@@ -4,7 +4,16 @@ export interface CapturedImage {
     type: string;
 }
 
-export interface Detection {}
+export type CellType = 'WBC' | 'RBC' | 'Platelet';
+
+export interface Detection {
+    cell_type: CellType;
+    confidence: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
 
 export interface Summary {
     WBC: number;
@@ -19,6 +28,7 @@ export interface AnalyzedImage {
     content_type: string;
     detections: Detection[];
     summary: Summary;
+    image_url: string;
     error?: string;
 }
 

@@ -111,7 +111,7 @@ const Camera = () => {
                 <div ref={flashRef} className='pointer-events-none absolute inset-0 rounded-lg bg-white opacity-0' />
                 <div
                     ref={badgeRef}
-                    className='absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1.5 text-sm font-medium text-white backdrop-blur'
+                    className='absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-primary/50 px-3 py-1.5 text-sm font-medium text-white backdrop-blur'
                 >
                     <ImagesIcon className='size-4' />
                     {images.length}
@@ -120,11 +120,11 @@ const Camera = () => {
                     type='button'
                     onClick={handleCapture}
                     aria-label='Take photo'
-                    className='group absolute bottom-6 left-1/2 flex size-16 -translate-x-1/2 items-center justify-center rounded-full border-4 border-white bg-transparent shadow-lg transition active:scale-95'
+                    className='group absolute bottom-6 left-1/2 flex size-16 -translate-x-1/2 items-center justify-center rounded-full border-4 border-primary bg-transparent shadow-lg transition active:scale-95'
                 >
                     <span className='size-12 rounded-full bg-white transition-all group-active:size-11' />
                 </button>
-                <Button className='absolute bottom-6 right-2 -translate-y-1/2' variant='outline' onClick={handleReview}>
+                <Button className='absolute bottom-6 right-2 -translate-y-1/2' onClick={handleReview}>
                     Review
                     <ArrowRightIcon className='size-4' />
                 </Button>

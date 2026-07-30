@@ -6,19 +6,32 @@ import { analyzeImages, removeImage } from '@/features/camera/cameraSlice';
 import { TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import type { CapturedImage } from '@/app/types';
 import { ROUTES } from '@/lib/constants';
 import { useNavigate } from 'react-router';
+import ImagesGallery from '@/components/ImagesGallery';
 
 const Review = () => {
     const images = useAppSelector((state) => state.camera.images);
     const status = useAppSelector((state) => state.camera.status);
     const uploadProgress = useAppSelector((state) => state.camera.uploadProgress);
-    const [selectedImage, setSelectedImage] = useState<CapturedImage>(images[0]);
+    const [selectedId, setSelectedId] = useState<string>(images[0]?.id);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    const selectedImage = images.find((image) => image.id === selectedId) ?? images[0];
     const isAnalyzing = status === 'uploading' || status === 'analyzing';
+
+    const handleRemoveImage = (id: string) => {
+        const image = images.find((img) => img.id === id);
+        if (!image) return;
+
+        URL.revokeObjectURL(image.previewUrl);
+        dispatch(removeImage(image));
+
+        if (id === selectedId) {
+            setSelectedId(images.find((img) => img.id !== id)?.id || images[0]?.id);
+        }
+    };
 
     const handleAnalyze = async () => {
         const formData = new FormData();
@@ -37,15 +50,6 @@ const Review = () => {
         }
     };
 
-    const handleRemoveImage = (image: CapturedImage) => {
-        URL.revokeObjectURL(image.previewUrl);
-        dispatch(removeImage(image));
-
-        if (image.id === selectedImage.id) {
-            setSelectedImage(images.find((img) => img.id !== image.id) || images[0]);
-        }
-    };
-
     return (
         <>
             <GoBack secondaryText={`${images.length}/10`} />
@@ -55,33 +59,12 @@ const Review = () => {
                     alt='Image'
                     className='w-full h-100 object-cover rounded-md border-2 border-primary'
                 />
-                <div className='grid grid-cols-4 gap-2'>
-                    {images.map((image) => (
-                        <div className='relative' key={image.id} onClick={() => setSelectedImage(image)}>
-                            {images.length !== 1 && (
-                                <Button
-                                    className='w-12 h-6 absolute inline-0 -right-3 -top-3 z-10 rounded-full text-center bg-black text-white'
-                                    variant='destructive'
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleRemoveImage(image);
-                                    }}
-                                >
-                                    <TrashIcon className='size-3' />
-                                </Button>
-                            )}
-                            <div
-                                className={`overflow-hidden rounded-md border-3 ${selectedImage === image ? 'border-primary' : 'border-transparent'}`}
-                            >
-                                <img
-                                    src={image.previewUrl}
-                                    alt='microscopy image'
-                                    className='w-full aspect-square object-cover'
-                                />
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <ImagesGallery
+                    images={images.map((image) => ({ id: image.id, url: image.previewUrl }))}
+                    selectedId={selectedId}
+                    onSelect={setSelectedId}
+                    onRemove={handleRemoveImage}
+                />
                 <p className='text-sm text-muted-foreground'>
                     Check each shot. Tap <TrashIcon className='inline align-text-bottom size-4 mx-1' /> to remove it
                     from the list.

@@ -15,6 +15,7 @@ const Review = () => {
     const status = useAppSelector((state) => state.camera.status);
     const uploadProgress = useAppSelector((state) => state.camera.uploadProgress);
     const [selectedId, setSelectedId] = useState<string>(images[0]?.id);
+    const [submitting, setSubmitting] = useState(false);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -34,6 +35,8 @@ const Review = () => {
     };
 
     const handleAnalyze = async () => {
+        setSubmitting(true);
+
         const formData = new FormData();
         for (const image of images) {
             const blob = await fetch(image.previewUrl).then((res) => res.blob());
@@ -47,7 +50,7 @@ const Review = () => {
             toast.success('Analysis complete');
             navigate(ROUTES.RESULTS);
         } catch {
-            // done in thunk
+            setSubmitting(false);
         }
     };
 
@@ -74,7 +77,7 @@ const Review = () => {
                     Analyze {images.length} images
                 </Button>
             </div>
-            {isAnalyzing && <AnalysisLoader status={status} progress={uploadProgress} />}
+            {(isAnalyzing || submitting) && <AnalysisLoader status={status} progress={uploadProgress} />}
         </>
     );
 };

@@ -47,13 +47,13 @@ const Results = () => {
 
     const handleDiscard = () => {
         // TODO: delete the field + note from history.
-        toast.success('Analysis discarded');
+        toast('Analysis discarded');
         navigate(ROUTES.HOME);
     };
 
     const handleAnalyzeAnother = () => {
-        dispatch(clearImages());
         navigate(ROUTES.CAMERA);
+        dispatch(clearImages());
     };
 
     return (

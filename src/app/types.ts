@@ -5,7 +5,6 @@ export interface CapturedImage {
 }
 
 export type CellType = 'WBC' | 'RBC' | 'Platelet';
-
 export interface Detection {
     cell_type: CellType;
     confidence: number;
@@ -21,15 +20,22 @@ export interface Summary {
     Platelet: number;
 }
 
-export interface AnalyzedImage {
+interface AnalyzedImageOk {
     id: string;
-    filename: string;
-    status: 'ok' | 'error';
+    batch_id: string;
+    status: 'ok';
     content_type: string;
+    image_url: string;
     detections: Detection[];
     summary: Summary;
-    image_url: string;
-    error?: string;
 }
+
+interface AnalyzedImageFailed {
+    id?: string;
+    status: 'failed';
+    error: string;
+}
+
+export type AnalyzedImage = AnalyzedImageOk | AnalyzedImageFailed;
 
 export type AnalysisStatus = 'idle' | 'uploading' | 'analyzing' | 'error';

@@ -24,9 +24,11 @@ const Results = () => {
 
     if (!analyzedImages.length) return <Navigate to={ROUTES.HOME} replace />;
 
-    const field = analyzedImages.find((img) => img.id === selectedFieldId) || analyzedImages[0];
+    // TODO: handle failed images
+    const okFields = analyzedImages.filter((img) => img.status === 'ok');
+    const fieldInViewFinder = okFields.find((img) => img.id === selectedFieldId) || okFields[0];
 
-    const cellCounts = field.detections.reduce(
+    const cellCounts = fieldInViewFinder.detections.reduce(
         (acc, detection) => {
             acc[detection.cell_type] += 1;
             return acc;
@@ -64,7 +66,7 @@ const Results = () => {
 
             <div className='relative aspect-square w-full overflow-hidden rounded-md bg-neutral-900'>
                 <img
-                    src={field.image_url}
+                    src={fieldInViewFinder.image_url}
                     alt='Microscopy field'
                     className='absolute inset-0 h-full w-full object-cover'
                 />
@@ -75,7 +77,7 @@ const Results = () => {
                 <span className='absolute bottom-3 left-3 size-5 border-b-2 border-l-2 border-white/50' />
                 <span className='absolute bottom-3 right-3 size-5 border-b-2 border-r-2 border-white/50' />
 
-                {field.detections.map((detection, index) => {
+                {fieldInViewFinder.detections.map((detection, index) => {
                     if (!shownCells.includes(detection.cell_type)) return null;
                     const meta = CELL_META[detection.cell_type];
                     const isSelected = selectedCellIndex === index;
@@ -109,7 +111,7 @@ const Results = () => {
             </div>
 
             <ImagesGallery
-                images={analyzedImages.map(({ id, image_url }) => ({ id, url: image_url }))}
+                images={okFields.map(({ id, image_url }) => ({ id, url: image_url }))}
                 selectedId={selectedFieldId}
                 onSelect={setSelectedFieldId}
             />

@@ -1,24 +1,28 @@
 import { CELL_META, CELL_ORDER } from '@/app/constants';
-import { useAppSelector } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import type { CellType } from '@/app/types';
 import GoBack from '@/components/GoBack';
 import ImagesGallery from '@/components/ImagesGallery';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { clearImages } from '@/features/camera/cameraSlice';
 import { ROUTES } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { InfoIcon } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 const Results = () => {
     const analyzedImages = useAppSelector((state) => state.camera.analyzedImages);
-    const navigate = useNavigate();
-    const [selectedFieldId, setSelectedFieldId] = useState<string>(analyzedImages[0].id);
+    const [selectedFieldId, setSelectedFieldId] = useState<string>(analyzedImages[0]?.id ?? '');
     const [shownCells, setShownCells] = useState<CellType[]>(CELL_ORDER);
     const [selectedCellIndex, setSelectedCellIndex] = useState<number | null>(null);
     const [note, setNote] = useState('');
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    if (!analyzedImages.length) return <Navigate to={ROUTES.HOME} replace />;
 
     const field = analyzedImages.find((img) => img.id === selectedFieldId) || analyzedImages[0];
 
@@ -41,10 +45,15 @@ const Results = () => {
         setSelectedCellIndex(null);
     };
 
-    const handleSave = () => {
-        // TODO: persist the field + note into history.
-        toast.success('Resultado guardado');
+    const handleDiscard = () => {
+        // TODO: delete the field + note from history.
+        toast.success('Analysis discarded');
         navigate(ROUTES.HOME);
+    };
+
+    const handleAnalyzeAnother = () => {
+        dispatch(clearImages());
+        navigate(ROUTES.CAMERA);
     };
 
     return (
@@ -153,11 +162,10 @@ const Results = () => {
             </div>
 
             <div className='grid grid-cols-2 gap-3'>
-                {/*                  TODO: it should delete the data from backend                 */}
-                <Button variant='outline' className='h-12' onClick={() => navigate(ROUTES.HOME)}>
+                <Button variant='outline' className='h-12' onClick={handleDiscard}>
                     Discard
                 </Button>
-                <Button className='h-12 text-white' onClick={() => navigate(ROUTES.CAMERA)}>
+                <Button className='h-12 text-white' onClick={handleAnalyzeAnother}>
                     Analyze another
                 </Button>
             </div>

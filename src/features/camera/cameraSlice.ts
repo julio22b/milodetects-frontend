@@ -17,21 +17,24 @@ const initialState: CameraState = {
     uploadProgress: 0,
 };
 
-export const analyzeImages = createAsyncThunk('camera/analyzeImages', async (formData: FormData, thunkAPI) => {
-    try {
-        const response = await api.post('/analyze', formData, {
-            onUploadProgress: (event) => {
-                const percent = event.total ? Math.round((event.loaded / event.total) * 100) : 0;
-                thunkAPI.dispatch(setUploadProgress(percent));
-            },
-        });
+export const analyzeImages = createAsyncThunk<AnalyzedImage[], FormData>(
+    'camera/analyzeImages',
+    async (formData, thunkAPI) => {
+        try {
+            const response = await api.post('/analyze', formData, {
+                onUploadProgress: (event) => {
+                    const percent = event.total ? Math.round((event.loaded / event.total) * 100) : 0;
+                    thunkAPI.dispatch(setUploadProgress(percent));
+                },
+            });
 
-        return response.data.results as AnalyzedImage[];
-    } catch (error) {
-        toast.error('Something went wrong during analysis. Please try again.');
-        return thunkAPI.rejectWithValue(error);
-    }
-});
+            return response.data.results as AnalyzedImage[];
+        } catch (error) {
+            toast.error('Something went wrong during analysis. Please try again.');
+            return thunkAPI.rejectWithValue(error);
+        }
+    },
+);
 
 const cameraSlice = createSlice({
     name: 'camera',
@@ -45,6 +48,7 @@ const cameraSlice = createSlice({
         },
         clearImages: (state) => {
             state.images = [];
+            state.analyzedImages = [];
         },
         setUploadProgress: (state, action: PayloadAction<number>) => {
             state.uploadProgress = action.payload;
@@ -63,6 +67,7 @@ const cameraSlice = createSlice({
             state.status = 'idle';
             state.uploadProgress = 0;
             state.analyzedImages = action.payload;
+            state.images = [];
         });
         builder.addCase(analyzeImages.rejected, (state) => {
             state.status = 'error';

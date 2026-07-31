@@ -43,6 +43,7 @@ const Review = () => {
 
         try {
             await dispatch(analyzeImages(formData)).unwrap();
+            images.forEach((image) => URL.revokeObjectURL(image.previewUrl));
             toast.success('Analysis complete');
             navigate(ROUTES.RESULTS);
         } catch {

@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { clearImages } from '@/features/camera/cameraSlice';
 import { ROUTES } from '@/lib/constants';
 import { cn } from '@/lib/utils';
-import { InfoIcon } from 'lucide-react';
+import InfoBox from '@/components/InfoBox';
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -155,11 +155,7 @@ const Results = () => {
                 placeholder='Add a note (optional)...'
             />
 
-            {/* Disclaimer */}
-            <div className='flex items-center gap-3 rounded-md border-2 border-primary bg-secondary p-2'>
-                <InfoIcon className='size-6 text-primary' />
-                <p className='text-xs'>Assistive tool. Do not replace professional diagnosis.</p>
-            </div>
+            <InfoBox>Assistive tool. Do not replace professional diagnosis.</InfoBox>
 
             <div className='grid grid-cols-2 gap-3'>
                 <Button variant='outline' className='h-12' onClick={handleDiscard}>

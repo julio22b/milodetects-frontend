@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { ROUTES } from '@/lib/constants';
 import { useNavigate } from 'react-router';
 import ImagesGallery from '@/components/ImagesGallery';
+import InfoBox from '@/components/InfoBox';
 
 const Review = () => {
     const images = useAppSelector((state) => state.camera.images);
@@ -69,10 +70,10 @@ const Review = () => {
                     onSelect={setSelectedId}
                     onRemove={handleRemoveImage}
                 />
-                <p className='text-sm text-muted-foreground'>
+                <InfoBox>
                     Check each shot. Tap <TrashIcon className='inline align-text-bottom size-4 mx-1' /> to remove it
                     from the list.
-                </p>
+                </InfoBox>
                 <Button className='w-full ' onClick={handleAnalyze}>
                     Analyze {images.length} images
                 </Button>

@@ -1,5 +1,6 @@
-import { CheckIcon, InfoIcon } from 'lucide-react';
+import { CheckIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import InfoBox from '@/components/InfoBox';
 import type { AnalysisStatus } from '@/app/types';
 
 export type AnalysisStepStatus = 'pending' | 'active' | 'done';
@@ -73,12 +74,7 @@ const AnalysisLoader = ({ status, progress }: AnalysisLoaderProps) => {
                     </div>
                 </div>
 
-                <div className='mt-auto flex items-center gap-3 rounded-md bg-secondary border-2 border-primary p-3'>
-                    <InfoIcon className='size-10 text-primary' />
-                    <p className='text-sm text-muted-foreground'>
-                        The first analysis can take a few seconds (server cold start).
-                    </p>
-                </div>
+                <InfoBox className='mt-auto'>The first analysis can take a few seconds (server cold start).</InfoBox>
             </div>
         </div>
     );

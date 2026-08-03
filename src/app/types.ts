@@ -23,7 +23,7 @@ export interface Summary {
 interface AnalyzedImageOk {
     id: string;
     batch_id: string;
-    status: 'ok';
+    status: 'completed';
     content_type: string;
     image_url: string;
     detections: Detection[];
@@ -37,5 +37,22 @@ interface AnalyzedImageFailed {
 }
 
 export type AnalyzedImage = AnalyzedImageOk | AnalyzedImageFailed;
+
+export type ImageStatus = 'processing' | 'completed' | 'failed';
+export interface BatchImage {
+    id: string;
+    image_url: string;
+    status: ImageStatus;
+    summary: Summary;
+}
+
+export interface Batch {
+    batch_id: string;
+    created_at: string;
+    sample: string;
+    image_count: number;
+    summary: Summary;
+    images: BatchImage[];
+}
 
 export type AnalysisStatus = 'idle' | 'uploading' | 'analyzing' | 'error';

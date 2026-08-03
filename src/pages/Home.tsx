@@ -1,16 +1,25 @@
-import { useAppDispatch, useAppStore } from '@/app/hooks';
+import { useAppDispatch, useAppSelector, useAppStore } from '@/app/hooks';
+import HomeCard from '@/features/home/HomeCard';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { clearImages } from '@/features/camera/cameraSlice';
 import { ROUTES } from '@/lib/constants';
 import { CameraIcon, ImagesIcon } from 'lucide-react';
 import { useEffect } from 'react';
 
 import { Link } from 'react-router';
+import { getBatches } from '@/features/home/homeSlice';
+import { Spinner } from '@/components/ui/spinner';
 
 export function Home() {
+    const { batches, loading } = useAppSelector((state) => state.home);
     const dispatch = useAppDispatch();
     const store = useAppStore();
+
+    useEffect(() => {
+        const promise = dispatch(getBatches(3));
+
+        return () => promise.abort();
+    }, [dispatch]);
 
     useEffect(() => {
         store.getState().camera.images.forEach((image) => URL.revokeObjectURL(image.previewUrl));
@@ -42,16 +51,16 @@ export function Home() {
                     View all
                 </Button>
             </div>
-            <Card className='bg-secondary'>
-                <CardHeader>
-                    <CardTitle>Sample #1112</CardTitle>
-                    <CardDescription>Today 01:00 PM</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <p>WBC 6.1 &middot; RBC 4.3 &middot; PLT 300 </p>
-                    <p>Some note or description</p>
-                </CardContent>
-            </Card>
+            {loading && (
+                <p className='flex gap-4 items-center justify-center mt-4 text-muted-foreground'>
+                    {' '}
+                    <Spinner />
+                    Getting batches...
+                </p>
+            )}
+            {batches.map((batch) => (
+                <HomeCard key={batch.batch_id} batch={batch} />
+            ))}
         </>
     );
 }

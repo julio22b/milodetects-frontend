@@ -25,8 +25,18 @@ const Results = () => {
     if (!analyzedImages.length) return <Navigate to={ROUTES.HOME} replace />;
 
     // TODO: handle failed images
-    const okFields = analyzedImages.filter((img) => img.status === 'ok');
-    const fieldInViewFinder = okFields.find((img) => img.id === selectedFieldId) || okFields[0];
+    const okAnalyses = analyzedImages.filter((img) => img.status === 'completed');
+
+    if (!okAnalyses.length) {
+        return (
+            <div className='flex flex-col gap-4'>
+                <GoBack redirectHome />
+                <InfoBox>All images in this batch failed to analyze. Please try again.</InfoBox>
+            </div>
+        );
+    }
+
+    const fieldInViewFinder = okAnalyses.find((img) => img.id === selectedFieldId) || okAnalyses[0];
 
     const cellCounts = fieldInViewFinder.detections.reduce(
         (acc, detection) => {
@@ -111,7 +121,7 @@ const Results = () => {
             </div>
 
             <ImagesGallery
-                images={okFields.map(({ id, image_url }) => ({ id, url: image_url }))}
+                images={okAnalyses.map(({ id, image_url }) => ({ id, url: image_url }))}
                 selectedId={selectedFieldId}
                 onSelect={setSelectedFieldId}
             />

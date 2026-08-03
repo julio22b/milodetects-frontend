@@ -75,7 +75,7 @@ const Review = () => {
                     from the list.
                 </InfoBox>
                 <Button className='w-full ' onClick={handleAnalyze}>
-                    Analyze {images.length} images
+                    Analyze {images.length} image{images.length > 1 ? 's' : ''}
                 </Button>
             </div>
             {(isAnalyzing || submitting) && <AnalysisLoader status={status} progress={uploadProgress} />}

@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/sonner';
 
 function App() {
     return (
-        <main className='flex min-h-svh flex-col gap-4 border-2 border-red-50 max-w-md m-auto p-4 pb-24'>
+        <main className='relative mx-auto flex min-h-svh max-w-md flex-col gap-4 border-x border-border bg-background p-4 pb-24 shadow-sm'>
             <Outlet />
             <BottomNav />
             <Toaster />

@@ -45,8 +45,8 @@ const AnalysisLoader = ({ status, progress }: AnalysisLoaderProps) => {
     ];
 
     return (
-        <div className='fixed inset-0 z-60 bg-background'>
-            <div className='mx-auto flex h-full max-w-md flex-col px-6 py-8'>
+        <div className='fixed inset-0 z-60 bg-muted'>
+            <div className='mx-auto flex h-full max-w-md flex-col bg-background px-6 py-8'>
                 <div className='pt-[14vh]'>
                     <div className='mt-14 flex flex-col gap-5'>
                         <p className='text-lg font-semibold text-center mb-6'>Analysis in progress</p>

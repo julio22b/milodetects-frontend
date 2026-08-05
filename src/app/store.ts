@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cameraSlice from '@/features/camera/cameraSlice';
-import homeSlice from '@/features/home/homeSlice';
+import batchesSlice from '@/features/batches/batchesSlice';
 
 export const store = configureStore({
     reducer: {
         camera: cameraSlice,
-        home: homeSlice,
+        batches: batchesSlice,
     },
 });
 

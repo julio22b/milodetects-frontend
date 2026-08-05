@@ -31,7 +31,7 @@ const GoBack = ({ secondaryText, redirectHome = false }: GoBackProps) => {
             )}
             <h1 className='text-lg font-bold'>{title}</h1>
             {secondaryText && (
-                <p className='border-2 border-primary bg-secondary text-primary font-bold text-sm w-fit ml-auto p-1'>
+                <p className='border-2 border-primary rounded-md bg-secondary text-primary font-bold text-sm w-fit ml-auto p-1'>
                     {secondaryText}
                 </p>
             )}

@@ -1,7 +1,7 @@
 import type { Batch } from '@/app/types';
 import { Card, CardContent } from '../../components/ui/card';
-import { cn, formatDate } from '@/lib/utils';
-import { CELL_META, CELLS } from '@/app/constants';
+import Sample from '@/components/Sample';
+import Summary from '@/components/Summary';
 
 interface HomeCardProps {
     batch: Batch;
@@ -10,10 +10,9 @@ interface HomeCardProps {
 const HomeCard = ({ batch }: HomeCardProps) => {
     const step = 6;
     const stack = batch.images.slice(0, 3);
-    const cells = Object.values(CELLS);
 
     return (
-        <Card className='bg-secondary/50 shadow-sm'>
+        <Card>
             <CardContent className='flex gap-4 items-center'>
                 <div className='relative size-16'>
                     {stack.map((image, i) => (
@@ -33,19 +32,9 @@ const HomeCard = ({ batch }: HomeCardProps) => {
                         ×{batch.image_count}
                     </span>
                 </div>
-                <div className='w-full'>
-                    <p className='flex items-baseline text-sm text-muted-foreground'>
-                        Spl: <span className='text-primary font-bold'>{batch.sample}</span>
-                        <span className='ml-auto text-xs text-muted-foreground'>{formatDate(batch.created_at)}</span>
-                    </p>
-                    <p className='mt-4 flex gap-4'>
-                        {cells.map((cell) => (
-                            <span key={cell} className='flex w-12 items-center'>
-                                <span className={cn('w-2 h-2 block rounded-full mr-1', CELL_META[cell].color)}></span>
-                                {batch.summary[cell]}
-                            </span>
-                        ))}
-                    </p>
+                <div className='w-full flex flex-col gap-2'>
+                    <Sample batch={batch} />
+                    <Summary summary={batch.summary} />
                 </div>
             </CardContent>
         </Card>

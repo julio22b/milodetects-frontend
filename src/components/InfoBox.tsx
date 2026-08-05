@@ -11,13 +11,10 @@ interface InfoBoxProps {
 const InfoBox = ({ children, icon: Icon = InfoIcon, className }: InfoBoxProps) => {
     return (
         <div
-            className={cn(
-                'flex items-center gap-3 rounded-md border-2 border-primary bg-secondary p-3',
-                className,
-            )}
+            className={cn('flex items-center gap-3 rounded-md border-2 border-primary bg-secondary/50 p-3', className)}
         >
             <Icon className='size-6 shrink-0 text-primary' />
-            <p className='text-sm text-muted-foreground'>{children}</p>
+            <p className='text-sm'>{children}</p>
         </div>
     );
 };

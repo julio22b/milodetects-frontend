@@ -38,7 +38,7 @@ interface AnalyzedImageFailed {
 
 export type AnalyzedImage = AnalyzedImageOk | AnalyzedImageFailed;
 
-export type ImageStatus = 'processing' | 'completed' | 'failed';
+export type ImageStatus = 'completed' | 'failed';
 export interface BatchImage {
     id: string;
     image_url: string;

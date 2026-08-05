@@ -7,17 +7,19 @@ import { CameraIcon, ImagesIcon } from 'lucide-react';
 import { useEffect } from 'react';
 
 import { Link } from 'react-router';
-import { getBatches } from '@/features/home/homeSlice';
+import { getBatches } from '@/features/batches/batchesSlice';
 import { Spinner } from '@/components/ui/spinner';
 import { Separator } from '@/components/ui/separator';
 
+const RECENT_LIMIT = 3;
+
 export function Home() {
-    const { batches, loading } = useAppSelector((state) => state.home);
+    const { batches, loading } = useAppSelector((state) => state.batches);
     const dispatch = useAppDispatch();
     const store = useAppStore();
 
     useEffect(() => {
-        const promise = dispatch(getBatches(3));
+        const promise = dispatch(getBatches(RECENT_LIMIT));
 
         return () => promise.abort();
     }, [dispatch]);
@@ -49,12 +51,7 @@ export function Home() {
                 </Button>
             </div>
             <Separator />
-            <div className='flex justify-between'>
-                <h3 className='text-md font-bold'>Recent analyses</h3>
-                <Button className='text-primary' variant='link'>
-                    View all
-                </Button>
-            </div>
+            <h3 className='text-sm text-muted-foreground'>Recent analyses</h3>
             {loading && (
                 <p className='flex gap-4 items-center justify-center mt-4 text-muted-foreground'>
                     {' '}
@@ -62,7 +59,7 @@ export function Home() {
                     Getting batches...
                 </p>
             )}
-            {batches.map((batch) => (
+            {batches.slice(0, RECENT_LIMIT).map((batch) => (
                 <HomeCard key={batch.batch_id} batch={batch} />
             ))}
         </>

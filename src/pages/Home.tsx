@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router';
 import { getBatches } from '@/features/home/homeSlice';
 import { Spinner } from '@/components/ui/spinner';
+import { Separator } from '@/components/ui/separator';
 
 export function Home() {
     const { batches, loading } = useAppSelector((state) => state.home);
@@ -29,22 +30,25 @@ export function Home() {
     return (
         <>
             <h3 className='text-2xl font-bold'>MiloDetects</h3>
-            <div className='flex gap-4'>
+            <Separator />
+            <p className='text-sm text-muted-foreground'>New analysis</p>
+            <div className='grid grid-cols-2 gap-4'>
                 <Link
-                    className='flex flex-1 flex-col items-center justify-center rounded-md bg-primary border-2 border-primary text-white font-bold'
+                    className='flex min-w-0 flex-col items-center justify-center shadow-sm rounded-md bg-primary border-2 border-primary text-white font-bold'
                     to={ROUTES.CAMERA}
                 >
                     <CameraIcon className='size-12 text-white' />
                     Take a picture
                 </Link>
                 <Button
-                    className='flex flex-1 flex-col py-10 justify-center border-2 border-primary text-primary font-bold h-full'
+                    className='flex min-w-0 flex-col py-10 justify-center shadow-sm border-2 border-primary text-primary font-bold h-full whitespace-normal'
                     variant='outline'
                 >
                     <ImagesIcon className='size-12' />
                     Choose from gallery
                 </Button>
             </div>
+            <Separator />
             <div className='flex justify-between'>
                 <h3 className='text-md font-bold'>Recent analyses</h3>
                 <Button className='text-primary' variant='link'>

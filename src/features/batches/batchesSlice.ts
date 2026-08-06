@@ -1,7 +1,10 @@
 import api from '@/api/client';
 import type { Batch } from '@/app/types';
-import { createAsyncThunk, createSlice, isAnyOf, type PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '@/app/store';
+import { createAsyncThunk, createSelector, createSlice, isAnyOf, type PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'sonner';
+
+export const RECENT_LIMIT = 3;
 
 interface BatchesState {
     batches: Batch[];
@@ -57,5 +60,9 @@ const batchesSlice = createSlice({
             });
     },
 });
+
+export const selectAllBatches = (state: RootState) => state.batches.batches;
+export const selectBatchesLoading = (state: RootState) => state.batches.loading;
+export const selectRecentBatches = createSelector([selectAllBatches], (batches) => batches.slice(0, RECENT_LIMIT));
 
 export default batchesSlice.reducer;

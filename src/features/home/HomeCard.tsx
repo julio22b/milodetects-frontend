@@ -13,7 +13,7 @@ const HomeCard = ({ batch }: HomeCardProps) => {
 
     return (
         <Card>
-            <CardContent className='flex gap-4 items-center'>
+            <CardContent className='flex gap-6 items-center'>
                 <div className='relative size-16'>
                     {stack.map((image, i) => (
                         <img

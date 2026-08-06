@@ -13,7 +13,7 @@ export const CELL_ORDER: CellType[] = [CELLS.WBC, CELLS.RBC, CELLS.Platelet];
 
 export const CELL_META: Record<
     CellType,
-    { code: string; color: string; label: string; box: string; bg: string; img: string }
+    { code: string; color: string; label: string; box: string; bg: string; img: string; textColor: string }
 > = {
     WBC: {
         code: 'WBC',
@@ -22,6 +22,7 @@ export const CELL_META: Record<
         color: 'bg-primary',
         bg: 'bg-secondary',
         img: wbc,
+        textColor: 'text-primary',
     },
     RBC: {
         code: 'RBC',
@@ -30,6 +31,7 @@ export const CELL_META: Record<
         color: 'bg-red-500',
         bg: 'bg-red-100',
         img: rbc,
+        textColor: 'text-red-500',
     },
     Platelet: {
         code: 'PLT',
@@ -38,5 +40,6 @@ export const CELL_META: Record<
         color: 'bg-blue-500',
         bg: 'bg-blue-100',
         img: platelet,
+        textColor: 'text-blue-500',
     },
 };

@@ -33,7 +33,7 @@ const ImagesGallery = ({ images, selectedId, onSelect, onRemove }: ImagesGallery
                     )}
                     <div
                         className={cn(
-                            'overflow-hidden rounded-md border-3',
+                            'overflow-hidden rounded-md border-4',
                             selectedId === image.id ? 'border-primary' : 'border-transparent',
                         )}
                     >

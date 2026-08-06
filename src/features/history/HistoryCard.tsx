@@ -1,16 +1,19 @@
 import type { Batch } from '@/app/types';
-import { Fragment } from 'react';
-import { Card, CardContent } from '../../components/ui/card';
+import { Card, CardContent, CardHeader } from '../../components/ui/card';
 import Sample from '@/components/Sample';
 import Summary from '@/components/Summary';
-import { Separator } from '@/components/ui/separator';
-import ErrorText from '@/components/ErrorText';
+import { useAppDispatch } from '@/app/hooks';
+import { deleteBatch } from '@/features/batches/batchesSlice';
+import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog';
+import { Badge } from '@/components/ui/badge';
 
 interface HistoryCardProps {
     batch: Batch;
 }
 
 const HistoryCard = ({ batch }: HistoryCardProps) => {
+    const dispatch = useAppDispatch();
+
     const { completed, failed } = batch.images.reduce(
         (acc, image) => {
             acc[image.status]++;
@@ -21,28 +24,37 @@ const HistoryCard = ({ batch }: HistoryCardProps) => {
 
     return (
         <Card>
-            <CardContent className='flex flex-col gap-2'>
-                <Sample batch={batch} />
-                <div className='flex items-center space-between w-full'>
+            <CardHeader>
+                <Sample
+                    batch={batch}
+                    action={
+                        <ConfirmDeleteDialog batch={batch} onDelete={() => dispatch(deleteBatch(batch.batch_id))} />
+                    }
+                />
+                <div className='flex items-center justify-between gap-2'>
+                    <Badge variant='secondary'>{completed} valid</Badge>
                     <Summary summary={batch.summary} className='text-xl' />
-                    <p className='text-sm ml-auto'>in {completed} valid fields</p>
                 </div>
-                {failed > 0 && <ErrorText error={`${failed} field${failed > 1 ? 's' : ''} failed`} />}
-                <div className='flex flex-col gap-4 '>
-                    {batch.images.map((image, index) => (
-                        <Fragment key={image.id}>
-                            <Separator />
-                            <div className='flex items-center gap-6'>
-                                <p className='text-sm text-muted-foreground'>{index + 1}</p>
-                                <img
-                                    src={image.image_url}
-                                    alt='microscopy image'
-                                    className='size-16 object-cover rounded-md'
-                                />
+                {failed > 0 && <Badge variant='destructive'>{failed} failed</Badge>}
+            </CardHeader>
+            <CardContent>
+                <div className='divide-y divide-border'>
+                    {batch.images.map((image) => (
+                        <div key={image.id} className='flex items-center gap-3 py-3 first:pt-0 last:pb-0'>
+                            <img
+                                src={image.image_url}
+                                alt='microscopy image'
+                                className='size-14 shrink-0 rounded-md border-2 border-secondary object-cover shadow-sm'
+                            />
+                            <div className='flex-1'>
                                 <Summary summary={image.summary} className='text-lg' />
-                                {image.status === 'failed' && <ErrorText error={image.status} />}
                             </div>
-                        </Fragment>
+                            {image.status === 'failed' && (
+                                <span className='rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-600'>
+                                    Failed
+                                </span>
+                            )}
+                        </div>
                     ))}
                 </div>
             </CardContent>

@@ -7,19 +7,18 @@ import { CameraIcon, ImagesIcon } from 'lucide-react';
 import { useEffect } from 'react';
 
 import { Link } from 'react-router';
-import { getBatches } from '@/features/batches/batchesSlice';
+import { getBatches, selectBatchesLoading, selectRecentBatches } from '@/features/batches/batchesSlice';
 import { Spinner } from '@/components/ui/spinner';
 import { Separator } from '@/components/ui/separator';
 
-const RECENT_LIMIT = 3;
-
 export function Home() {
-    const { batches, loading } = useAppSelector((state) => state.batches);
+    const recent = useAppSelector(selectRecentBatches);
+    const loading = useAppSelector(selectBatchesLoading);
     const dispatch = useAppDispatch();
     const store = useAppStore();
 
     useEffect(() => {
-        const promise = dispatch(getBatches(RECENT_LIMIT));
+        const promise = dispatch(getBatches());
 
         return () => promise.abort();
     }, [dispatch]);
@@ -59,7 +58,7 @@ export function Home() {
                     Getting batches...
                 </p>
             )}
-            {batches.slice(0, RECENT_LIMIT).map((batch) => (
+            {recent.map((batch) => (
                 <HomeCard key={batch.batch_id} batch={batch} />
             ))}
         </>

@@ -1,12 +1,17 @@
 import type { Batch } from '@/app/types';
 import { formatDate } from '@/lib/utils';
+import { Badge } from './ui/badge';
+import type { ReactNode } from 'react';
 
-const Sample = ({ batch }: { batch: Batch }) => {
+const Sample = ({ batch, action }: { batch: Batch; action?: ReactNode }) => {
     return (
-        <p className='flex items-baseline text-sm text-muted-foreground'>
-            Spl: <span className='text-primary font-bold'>{batch.sample}</span>
-            <span className='ml-auto text-xs text-muted-foreground'>{formatDate(batch.created_at)}</span>
-        </p>
+        <div className='flex items-center justify-between text-sm text-muted-foreground'>
+            <Badge>{batch.sample}</Badge>
+            <div className='flex items-center gap-1'>
+                <Badge variant='secondary'>{formatDate(batch.created_at)}</Badge>
+                {action}
+            </div>
+        </div>
     );
 };
 

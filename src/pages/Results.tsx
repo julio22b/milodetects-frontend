@@ -81,12 +81,6 @@ const Results = () => {
                     className='absolute inset-0 h-full w-full object-cover'
                 />
 
-                {/* Viewfinder corner brackets */}
-                <span className='absolute left-3 top-3 size-5 border-l-2 border-t-2 border-white/50' />
-                <span className='absolute right-3 top-3 size-5 border-r-2 border-t-2 border-white/50' />
-                <span className='absolute bottom-3 left-3 size-5 border-b-2 border-l-2 border-white/50' />
-                <span className='absolute bottom-3 right-3 size-5 border-b-2 border-r-2 border-white/50' />
-
                 {fieldInViewFinder.detections.map((detection, index) => {
                     if (!shownCells.includes(detection.cell_type)) return null;
                     const meta = CELL_META[detection.cell_type];

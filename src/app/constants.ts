@@ -6,10 +6,10 @@ import platelet from '../../public/platelet.png';
 export const CELLS: Record<CellType, CellType> = {
     WBC: 'WBC',
     RBC: 'RBC',
-    Platelet: 'Platelet',
+    Platelets: 'Platelets',
 };
 
-export const CELL_ORDER: CellType[] = [CELLS.WBC, CELLS.RBC, CELLS.Platelet];
+export const CELL_ORDER: CellType[] = [CELLS.WBC, CELLS.RBC, CELLS.Platelets];
 
 export const CELL_META: Record<
     CellType,
@@ -33,7 +33,7 @@ export const CELL_META: Record<
         img: rbc,
         textColor: 'text-red-500',
     },
-    Platelet: {
+    Platelets: {
         code: 'PLT',
         label: 'Platelet',
         box: 'border-blue-500',

@@ -43,7 +43,7 @@ const Results = () => {
             acc[detection.cell_type] += 1;
             return acc;
         },
-        { WBC: 0, RBC: 0, Platelet: 0 } as Record<CellType, number>,
+        { WBC: 0, RBC: 0, Platelets: 0 } as Record<CellType, number>,
     );
 
     const toggleShownCells = (type: CellType) => {

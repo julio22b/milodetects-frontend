@@ -4,7 +4,7 @@ export interface CapturedImage {
     type: string;
 }
 
-export type CellType = 'WBC' | 'RBC' | 'Platelet';
+export type CellType = 'WBC' | 'RBC' | 'Platelets';
 export interface Detection {
     cell_type: CellType;
     confidence: number;
@@ -17,7 +17,7 @@ export interface Detection {
 export interface Summary {
     WBC: number;
     RBC: number;
-    Platelet: number;
+    Platelets: number;
 }
 
 interface AnalyzedImageOk {

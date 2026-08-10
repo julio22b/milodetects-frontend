@@ -51,16 +51,15 @@ export function Home() {
             </div>
             <Separator />
             <h3 className='text-sm text-muted-foreground'>Recent analyses</h3>
-            {loading && (
+            {loading ? (
                 <p className='flex gap-4 items-center justify-center mt-4 text-muted-foreground'>
                     {' '}
                     <Spinner />
                     Getting batches...
                 </p>
+            ) : (
+                recent.map((batch) => <HomeCard key={batch.batch_id} batch={batch} />)
             )}
-            {recent.map((batch) => (
-                <HomeCard key={batch.batch_id} batch={batch} />
-            ))}
         </>
     );
 }

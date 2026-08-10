@@ -12,6 +12,7 @@ import InfoBox from '@/components/InfoBox';
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
 import { toast } from 'sonner';
+import { deleteBatch } from '@/features/batches/batchesSlice';
 
 const Results = () => {
     const analyzedImages = useAppSelector((state) => state.camera.analyzedImages);
@@ -57,10 +58,12 @@ const Results = () => {
         setSelectedCellIndex(null);
     };
 
-    const handleDiscard = () => {
-        // TODO: delete the field + note from history.
-        toast('Analysis discarded');
-        navigate(ROUTES.HOME);
+    const handleDiscard = async () => {
+        try {
+            await dispatch(deleteBatch(fieldInViewFinder.batch_id)).unwrap();
+            toast.success('Analysis discarded');
+            navigate(ROUTES.HOME);
+        } catch {}
     };
 
     const handleAnalyzeAnother = () => {

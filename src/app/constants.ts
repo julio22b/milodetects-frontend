@@ -43,3 +43,5 @@ export const CELL_META: Record<
         textColor: 'text-blue-500',
     },
 };
+
+export const MAX_IMAGES_PER_ANALYSIS = 10;

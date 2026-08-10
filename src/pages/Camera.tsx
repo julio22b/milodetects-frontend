@@ -1,3 +1,4 @@
+import { MAX_IMAGES_PER_ANALYSIS } from '@/app/constants';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import type { CapturedImage } from '@/app/types';
 import GoBack from '@/components/GoBack';
@@ -55,8 +56,8 @@ const Camera = () => {
             return;
         }
 
-        if (images.length >= 10) {
-            toast.error('You can only capture 10 images at a time');
+        if (images.length >= MAX_IMAGES_PER_ANALYSIS) {
+            toast.error(`You can only capture ${MAX_IMAGES_PER_ANALYSIS} images at a time`);
             return;
         }
 

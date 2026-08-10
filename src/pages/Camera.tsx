@@ -71,22 +71,26 @@ const Camera = () => {
 
         context.drawImage(videoRef.current, 0, 0);
 
-        canvasRef.current.toBlob((blob) => {
-            if (!blob) return;
+        canvasRef.current.toBlob(
+            (blob) => {
+                if (!blob) return;
 
-            const id = crypto.randomUUID();
-            const image: CapturedImage = {
-                id,
-                previewUrl: URL.createObjectURL(blob),
-                type: blob.type,
-            };
+                const id = crypto.randomUUID();
+                const image: CapturedImage = {
+                    id,
+                    previewUrl: URL.createObjectURL(blob),
+                    type: blob.type,
+                };
 
-            dispatch(addImage(image));
-            badgeRef.current?.animate(
-                [{ transform: 'scale(1)' }, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }],
-                { duration: 300, easing: 'ease-out' },
-            );
-        });
+                dispatch(addImage(image));
+                badgeRef.current?.animate(
+                    [{ transform: 'scale(1)' }, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }],
+                    { duration: 300, easing: 'ease-out' },
+                );
+            },
+            'image/jpeg',
+            0.85,
+        );
     };
 
     const handleReview = () => {

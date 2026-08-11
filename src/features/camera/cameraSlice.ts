@@ -1,4 +1,4 @@
-import type { Analysis, AnalysisStatus, AnalyzedImage, CapturedImage } from '@/app/types';
+import type { Analysis, AnalysisStatus, CapturedImage } from '@/app/types';
 import { api } from '@/api/client';
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'sonner';

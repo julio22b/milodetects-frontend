@@ -36,6 +36,13 @@ interface AnalyzedImageFailed {
     error: string;
 }
 
+export interface Analysis {
+    batch_id: string;
+    results: AnalyzedImage[];
+    count: number;
+    sample: string;
+}
+
 export type AnalyzedImage = AnalyzedImageOk | AnalyzedImageFailed;
 
 export type ImageStatus = 'completed' | 'failed';

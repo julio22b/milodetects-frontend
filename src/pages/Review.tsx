@@ -12,7 +12,7 @@ import ImagesGallery from '@/components/ImagesGallery';
 import InfoBox from '@/components/InfoBox';
 
 const Review = () => {
-    const images = useAppSelector((state) => state.camera.images);
+    const images = useAppSelector((state) => state.camera.previewImages);
     const status = useAppSelector((state) => state.camera.status);
     const uploadProgress = useAppSelector((state) => state.camera.uploadProgress);
     const [selectedId, setSelectedId] = useState<string>(images[0]?.id);

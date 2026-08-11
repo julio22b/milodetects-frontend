@@ -1,23 +1,23 @@
-import type { AnalysisStatus, AnalyzedImage, CapturedImage } from '@/app/types';
+import type { Analysis, AnalysisStatus, AnalyzedImage, CapturedImage } from '@/app/types';
 import { api } from '@/api/client';
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'sonner';
 
 export interface CameraState {
-    images: CapturedImage[];
-    analyzedImages: AnalyzedImage[];
+    previewImages: CapturedImage[];
     status: AnalysisStatus;
     uploadProgress: number;
+    analysis: Analysis | null;
 }
 
 const initialState: CameraState = {
-    images: [],
-    analyzedImages: [],
+    previewImages: [],
     status: 'idle',
     uploadProgress: 0,
+    analysis: null,
 };
 
-export const analyzeImages = createAsyncThunk<AnalyzedImage[], FormData>(
+export const analyzeImages = createAsyncThunk<Analysis, FormData>(
     'camera/analyzeImages',
     async (formData, thunkAPI) => {
         try {
@@ -28,7 +28,7 @@ export const analyzeImages = createAsyncThunk<AnalyzedImage[], FormData>(
                 },
             });
 
-            return response.data.results as AnalyzedImage[];
+            return response.data as Analysis;
         } catch (error) {
             toast.error('Something went wrong during analysis. Please try again.');
             return thunkAPI.rejectWithValue(error);
@@ -41,14 +41,14 @@ const cameraSlice = createSlice({
     initialState,
     reducers: {
         addImage: (state, action: PayloadAction<CapturedImage>) => {
-            state.images.push(action.payload);
+            state.previewImages.push(action.payload);
         },
         removeImage: (state, action: PayloadAction<CapturedImage>) => {
-            state.images = state.images.filter((img) => img.id !== action.payload.id);
+            state.previewImages = state.previewImages.filter((img) => img.id !== action.payload.id);
         },
         clearImages: (state) => {
-            state.images = [];
-            state.analyzedImages = [];
+            state.previewImages = [];
+            state.analysis = null;
         },
         setUploadProgress: (state, action: PayloadAction<number>) => {
             state.uploadProgress = action.payload;
@@ -63,11 +63,11 @@ const cameraSlice = createSlice({
             state.status = 'uploading';
             state.uploadProgress = 0;
         });
-        builder.addCase(analyzeImages.fulfilled, (state, action: PayloadAction<AnalyzedImage[]>) => {
+        builder.addCase(analyzeImages.fulfilled, (state, action: PayloadAction<Analysis>) => {
             state.status = 'idle';
             state.uploadProgress = 0;
-            state.analyzedImages = action.payload;
-            state.images = [];
+            state.analysis = action.payload;
+            state.previewImages = [];
         });
         builder.addCase(analyzeImages.rejected, (state) => {
             state.status = 'error';

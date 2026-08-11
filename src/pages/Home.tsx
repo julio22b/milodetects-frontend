@@ -29,7 +29,7 @@ export function Home() {
     }, [dispatch]);
 
     useEffect(() => {
-        store.getState().camera.images.forEach((image) => URL.revokeObjectURL(image.previewUrl));
+        store.getState().camera.previewImages.forEach((image) => URL.revokeObjectURL(image.previewUrl));
         dispatch(clearImages());
     }, [dispatch, store]);
 

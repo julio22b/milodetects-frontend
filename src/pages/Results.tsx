@@ -15,7 +15,8 @@ import { toast } from 'sonner';
 import { deleteBatch } from '@/features/batches/batchesSlice';
 
 const Results = () => {
-    const analyzedImages = useAppSelector((state) => state.camera.analyzedImages);
+    const analysis = useAppSelector((state) => state.camera.analysis);
+    const analyzedImages = analysis?.results ?? [];
     const [selectedFieldId, setSelectedFieldId] = useState<string>(analyzedImages[0]?.id ?? '');
     const [shownCells, setShownCells] = useState<CellType[]>(CELL_ORDER);
     const [selectedCellIndex, setSelectedCellIndex] = useState<number | null>(null);
@@ -60,8 +61,10 @@ const Results = () => {
     };
 
     const handleDiscard = async () => {
+        if (!analysis) return;
+
         try {
-            await dispatch(deleteBatch(fieldInViewFinder.batch_id)).unwrap();
+            await dispatch(deleteBatch(analysis.batch_id)).unwrap();
             toast.success('Analysis discarded');
             navigate(ROUTES.HOME);
         } catch {}

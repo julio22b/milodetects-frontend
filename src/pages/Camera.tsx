@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 const Camera = () => {
-    const images = useAppSelector((state) => state.camera.images);
+    const previewImages = useAppSelector((state) => state.camera.previewImages);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const streamRef = useRef<MediaStream | null>(null);
@@ -56,7 +56,7 @@ const Camera = () => {
             return;
         }
 
-        if (images.length >= MAX_IMAGES_PER_ANALYSIS) {
+        if (previewImages.length >= MAX_IMAGES_PER_ANALYSIS) {
             toast.error(`You can only capture ${MAX_IMAGES_PER_ANALYSIS} images at a time`);
             return;
         }
@@ -95,7 +95,7 @@ const Camera = () => {
     };
 
     const handleReview = () => {
-        if (!images.length) {
+        if (!previewImages.length) {
             toast.error('Please select at least one image');
             return;
         }
@@ -119,7 +119,7 @@ const Camera = () => {
                     className='absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-primary/50 px-3 py-1.5 text-sm font-medium text-white backdrop-blur'
                 >
                     <ImagesIcon className='size-4' />
-                    {images.length}
+                    {previewImages.length}
                 </div>
                 <button
                     type='button'

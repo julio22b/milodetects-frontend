@@ -19,6 +19,7 @@ const Results = () => {
     const [selectedFieldId, setSelectedFieldId] = useState<string>(analyzedImages[0]?.id ?? '');
     const [shownCells, setShownCells] = useState<CellType[]>(CELL_ORDER);
     const [selectedCellIndex, setSelectedCellIndex] = useState<number | null>(null);
+    const [imageRatio, setImageRatio] = useState<number>();
     const [note, setNote] = useState('');
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -77,11 +78,17 @@ const Results = () => {
 
             <p className='text-sm text-muted-foreground'>Tap a cell to see its confidence.</p>
 
-            <div className='relative aspect-square w-full overflow-hidden rounded-md bg-neutral-900'>
+            <div
+                className='relative w-full overflow-hidden rounded-md bg-neutral-900'
+                style={{ aspectRatio: imageRatio ?? 1 }}
+            >
                 <img
                     src={fieldInViewFinder.image_url}
                     alt='Microscopy field'
-                    className='absolute inset-0 h-full w-full object-cover'
+                    className='absolute inset-0 h-full w-full'
+                    onLoad={(event) =>
+                        setImageRatio(event.currentTarget.naturalWidth / event.currentTarget.naturalHeight)
+                    }
                 />
 
                 {fieldInViewFinder.detections.map((detection, index) => {

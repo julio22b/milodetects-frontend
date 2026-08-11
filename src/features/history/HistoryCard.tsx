@@ -6,6 +6,7 @@ import { useAppDispatch } from '@/app/hooks';
 import { deleteBatch } from '@/features/batches/batchesSlice';
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog';
 import { Badge } from '@/components/ui/badge';
+import { toast } from 'sonner';
 
 interface HistoryCardProps {
     batch: Batch;
@@ -22,15 +23,17 @@ const HistoryCard = ({ batch }: HistoryCardProps) => {
         { completed: 0, failed: 0 },
     );
 
+    const handleDelete = async () => {
+        try {
+            await dispatch(deleteBatch(batch.batch_id)).unwrap();
+            toast.success('Analysis deleted');
+        } catch {}
+    };
+
     return (
         <Card>
             <CardHeader>
-                <Sample
-                    batch={batch}
-                    action={
-                        <ConfirmDeleteDialog batch={batch} onDelete={() => dispatch(deleteBatch(batch.batch_id))} />
-                    }
-                />
+                <Sample batch={batch} action={<ConfirmDeleteDialog batch={batch} onDelete={handleDelete} />} />
                 <div className='flex items-center justify-between gap-2'>
                     <Badge variant='secondary'>{completed} valid</Badge>
                     <Summary summary={batch.summary} className='text-xl' />
@@ -40,15 +43,13 @@ const HistoryCard = ({ batch }: HistoryCardProps) => {
             <CardContent>
                 <div className='divide-y divide-border'>
                     {batch.images.map((image) => (
-                        <div key={image.id} className='flex items-center gap-3 py-3 first:pt-0 last:pb-0'>
+                        <div key={image.id} className='flex items-center gap-3 py-2 hover:bg-primary/10 rounded-md'>
                             <img
                                 src={image.image_url}
                                 alt='microscopy image'
                                 className='size-14 shrink-0 rounded-md border-2 border-secondary object-cover shadow-sm'
                             />
-                            <div className='flex-1'>
-                                <Summary summary={image.summary} className='text-lg' />
-                            </div>
+                            <Summary summary={image.summary} className='text-lg' />
                             {image.status === 'failed' && (
                                 <span className='rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-600'>
                                     Failed

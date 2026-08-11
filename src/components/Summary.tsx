@@ -15,7 +15,7 @@ const Summary = ({ summary, className }: SummaryProps) => {
             {cells.map((cell) => (
                 <span key={cell} className={cn('flex min-w-12 items-center font-bold tabular-nums', className)}>
                     <p className={cn('mr-2 text-sm', CELL_META[cell].textColor)}>{cell.charAt(0).toUpperCase()}</p>
-                    {summary[cell]}
+                    {summary[cell] || 0}
                 </span>
             ))}
         </p>

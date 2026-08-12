@@ -11,6 +11,7 @@ import Camera from './pages/Camera.tsx';
 import Review from './pages/Review.tsx';
 import Results from './pages/Results.tsx';
 import History from './pages/History.tsx';
+import BatchDetail from './pages/BatchDetail.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
                         <Route path={ROUTES.CAMERA} element={<Camera />} />
                         <Route path={ROUTES.REVIEW} element={<Review />} />
                         <Route path={ROUTES.RESULTS} element={<Results />} />
+                        <Route path={`${ROUTES.BATCH}/:id`} element={<BatchDetail />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

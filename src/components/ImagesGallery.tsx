@@ -33,8 +33,8 @@ const ImagesGallery = ({ images, selectedId, onSelect, onRemove }: ImagesGallery
                     )}
                     <div
                         className={cn(
-                            'overflow-hidden rounded-md border-4',
-                            selectedId === image.id ? 'border-primary' : 'border-transparent',
+                            'overflow-hidden rounded-md border-2',
+                            selectedId === image.id ? 'border-primary shadow-md shadow-primary' : 'border-transparent',
                         )}
                     >
                         <img src={image.url} alt='microscopy image' className='w-full aspect-square object-cover' />

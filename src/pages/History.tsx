@@ -20,7 +20,7 @@ function History() {
             {loading ? (
                 <p className='flex gap-4 items-center justify-center mt-4 text-muted-foreground'>
                     <Spinner />
-                    Getting batches...
+                    Getting analyses...
                 </p>
             ) : (
                 batches.map((batch) => <HistoryCard key={batch.batch_id} batch={batch} />)

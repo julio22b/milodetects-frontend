@@ -7,6 +7,8 @@ import { deleteBatch } from '@/features/batches/batchesSlice';
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
+import { ROUTES } from '@/lib/constants';
+import { useNavigate } from 'react-router';
 
 interface HistoryCardProps {
     batch: Batch;
@@ -14,6 +16,7 @@ interface HistoryCardProps {
 
 const HistoryCard = ({ batch }: HistoryCardProps) => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const { completed, failed } = batch.images.reduce(
         (acc, image) => {
@@ -31,9 +34,15 @@ const HistoryCard = ({ batch }: HistoryCardProps) => {
     };
 
     return (
-        <Card>
+        <Card
+            onClick={() => navigate(`${ROUTES.BATCH}/${batch.batch_id}`)}
+            className='cursor-pointer transition-colors hover:border-primary/40'
+        >
             <CardHeader>
-                <Sample batch={batch} action={<ConfirmDeleteDialog batch={batch} onDelete={handleDelete} />} />
+                <Sample
+                    batch={batch}
+                    action={<ConfirmDeleteDialog imageCount={batch.images.length} onDelete={handleDelete} />}
+                />
                 <div className='flex items-center justify-between gap-2'>
                     <Badge variant='secondary'>{completed} valid</Badge>
                     <Summary summary={batch.summary} className='text-xl' />

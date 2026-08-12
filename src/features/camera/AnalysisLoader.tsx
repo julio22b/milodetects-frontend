@@ -74,7 +74,9 @@ const AnalysisLoader = ({ status, progress }: AnalysisLoaderProps) => {
                     </div>
                 </div>
 
-                <InfoBox className='mt-auto'>The first analysis can take a few seconds (server cold start).</InfoBox>
+                <InfoBox className='mt-auto'>
+                    Running on a free server. The first analysis after a while can take up to a minute.
+                </InfoBox>
             </div>
         </div>
     );

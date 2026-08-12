@@ -62,7 +62,7 @@ const Review = () => {
                 <img
                     src={selectedImage?.previewUrl}
                     alt='Image'
-                    className='w-full h-100 object-cover rounded-md border-2 border-primary'
+                    className='w-full h-100 object-cover rounded-md border-2 shadow-md border-primary'
                 />
                 <ImagesGallery
                     images={images.map((image) => ({ id: image.id, url: image.previewUrl }))}
@@ -74,7 +74,7 @@ const Review = () => {
                     Check each shot. Tap <TrashIcon className='inline align-text-bottom size-4 mx-1' /> to remove it
                     from the list.
                 </InfoBox>
-                <Button className='w-full ' onClick={handleAnalyze}>
+                <Button className='w-full h-12' onClick={handleAnalyze}>
                     Analyze {images.length} image{images.length > 1 ? 's' : ''}
                 </Button>
             </div>

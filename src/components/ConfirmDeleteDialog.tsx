@@ -11,27 +11,36 @@ import {
     AlertDialog,
 } from './ui/alert-dialog';
 import { Button } from './ui/button';
-import type { Batch } from '@/app/types';
+import type { ReactNode } from 'react';
 
 interface ConfirmDeleteDialogProps {
-    batch: Batch;
+    imageCount: number;
     onDelete: () => void;
+    trigger?: ReactNode;
 }
 
-const ConfirmDeleteDialog = ({ batch, onDelete }: ConfirmDeleteDialogProps) => {
+const ConfirmDeleteDialog = ({ imageCount, onDelete, trigger }: ConfirmDeleteDialogProps) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button variant='ghost' size='icon' className='text-destructive' aria-label='Delete batch'>
-                    <Trash2Icon />
-                </Button>
+                {trigger ?? (
+                    <Button
+                        variant='ghost'
+                        size='icon'
+                        className='text-destructive'
+                        aria-label='Delete batch'
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        <Trash2Icon />
+                    </Button>
+                )}
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Delete this analysis?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        This permanently deletes the analysis and its {batch.images.length} analyzed image
-                        {batch.images.length !== 1 ? 's' : ''}.
+                        This permanently deletes the analysis and its {imageCount} analyzed image
+                        {imageCount !== 1 ? 's' : ''}.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>

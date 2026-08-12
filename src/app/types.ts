@@ -45,6 +45,13 @@ export interface Analysis {
 
 export type AnalyzedImage = AnalyzedImageOk | AnalyzedImageFailed;
 
+export interface BatchDetail {
+    batch_id: string;
+    sample: string;
+    created_at: string;
+    images: AnalyzedImage[];
+}
+
 export type ImageStatus = 'completed' | 'failed';
 export interface BatchImage {
     id: string;

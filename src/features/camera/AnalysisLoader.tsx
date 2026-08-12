@@ -32,7 +32,7 @@ const StepIcon = ({ status }: { status: AnalysisStepStatus }) => {
     return <div className='size-8 shrink-0 rounded-full border-2 border-muted' />;
 };
 
-const AnalysisLoader = ({ status, progress }: AnalysisLoaderProps) => {
+const AnalysisLoader = ({ status }: AnalysisLoaderProps) => {
     const analysisSteps: AnalysisStep[] = [
         {
             label: 'Uploading images',

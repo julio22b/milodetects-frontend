@@ -2,11 +2,8 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import DetectionViewer from '@/components/DetectionViewer';
 import GoBack from '@/components/GoBack';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import { clearImages } from '@/features/camera/cameraSlice';
 import { ROUTES } from '@/lib/constants';
-import InfoBox from '@/components/InfoBox';
-import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { deleteBatch } from '@/features/batches/batchesSlice';
@@ -14,7 +11,6 @@ import { deleteBatch } from '@/features/batches/batchesSlice';
 const Results = () => {
     const analysis = useAppSelector((state) => state.camera.analysis);
     const analyzedImages = analysis?.results ?? [];
-    const [note, setNote] = useState('');
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -38,12 +34,6 @@ const Results = () => {
             <GoBack redirectHome />
 
             <DetectionViewer images={analyzedImages} />
-
-            {/* <Textarea
-                value={note}
-                onChange={(event) => setNote(event.target.value)}
-                placeholder='Add a note (optional)...'
-            /> */}
 
             {/* <InfoBox>Assistive tool. Do not replace professional diagnosis.</InfoBox> */}
 

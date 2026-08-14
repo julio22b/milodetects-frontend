@@ -16,7 +16,7 @@ import BatchDetail from './pages/BatchDetail.tsx';
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <Provider store={store}>
-            <BrowserRouter basename='/milodetects-frontend'>
+            <BrowserRouter basename={import.meta.env.BASE_URL}>
                 <Routes>
                     <Route element={<App />}>
                         <Route index element={<Home />} />

@@ -1,5 +1,5 @@
 import type { Batch } from '@/app/types';
-import { formatDate } from '@/lib/utils';
+import { formatDate } from '@/app/utils';
 import { Badge } from './ui/badge';
 import type { ReactNode } from 'react';
 

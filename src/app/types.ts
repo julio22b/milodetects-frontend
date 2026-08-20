@@ -1,7 +1,10 @@
+export type Magnification = '4x' | '10x' | '40x' | '100x';
+
 export interface CapturedImage {
     id: string;
     previewUrl: string;
     type: string;
+    magnification: Magnification;
 }
 
 export type CellType = 'WBC' | 'RBC' | 'Platelets';
@@ -22,7 +25,7 @@ export interface Summary {
 
 interface AnalyzedImageOk {
     id: string;
-    batch_id: string;
+    magnification: Magnification;
     status: 'completed';
     content_type: string;
     image_url: string;

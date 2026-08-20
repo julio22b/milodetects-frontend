@@ -7,7 +7,7 @@ import { deleteBatch } from '@/features/batches/batchesSlice';
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { ROUTES } from '@/lib/constants';
+import { ROUTES } from '@/app/constants';
 import { useNavigate } from 'react-router';
 
 interface HistoryCardProps {

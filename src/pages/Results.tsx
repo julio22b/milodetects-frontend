@@ -3,7 +3,7 @@ import DetectionViewer from '@/components/DetectionViewer';
 import GoBack from '@/components/GoBack';
 import { Button } from '@/components/ui/button';
 import { clearImages } from '@/features/camera/cameraSlice';
-import { ROUTES } from '@/lib/constants';
+import { ROUTES } from '@/app/constants';
 import { Navigate, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { deleteBatch } from '@/features/batches/batchesSlice';

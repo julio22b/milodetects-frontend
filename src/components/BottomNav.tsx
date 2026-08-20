@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from 'react-router';
-import { ROUTES, type RoutePath } from '@/lib/constants';
-import { cn } from '@/lib/utils';
+import { ROUTES, type RoutePath } from '@/app/constants';
+import { cn } from '@/app/utils';
 
 type NavItem = {
     to: RoutePath;

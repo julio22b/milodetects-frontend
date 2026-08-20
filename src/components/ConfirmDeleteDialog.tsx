@@ -35,7 +35,7 @@ const ConfirmDeleteDialog = ({ imageCount, onDelete, trigger }: ConfirmDeleteDia
                     </Button>
                 )}
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent onClick={(event) => event.stopPropagation()}>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Delete this analysis?</AlertDialogTitle>
                     <AlertDialogDescription>

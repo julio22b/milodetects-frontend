@@ -2,7 +2,7 @@ import type { Batch } from '@/app/types';
 import { Card, CardContent } from '../../components/ui/card';
 import Sample from '@/components/Sample';
 import Summary from '@/components/Summary';
-import { ROUTES } from '@/lib/constants';
+import { ROUTES } from '@/app/constants';
 import { Link } from 'react-router';
 
 interface HomeCardProps {

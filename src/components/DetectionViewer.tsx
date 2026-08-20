@@ -2,7 +2,7 @@ import { CELL_META, CELL_ORDER } from '@/app/constants';
 import type { AnalyzedImage, CellType } from '@/app/types';
 import ImagesGallery from '@/components/ImagesGallery';
 import InfoBox from '@/components/InfoBox';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/utils';
 import { useState } from 'react';
 
 interface DetectionViewerProps {
@@ -86,7 +86,7 @@ const DetectionViewer = ({ images }: DetectionViewerProps) => {
                 })}
 
                 <span className='absolute bottom-3 left-1/2 -translate-x-1/2 rounded bg-black/60 px-2 py-1 text-xs font-medium text-white backdrop-blur'>
-                    ????
+                    {fieldInViewFinder.magnification}
                 </span>
             </div>
 

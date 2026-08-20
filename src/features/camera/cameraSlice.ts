@@ -1,4 +1,4 @@
-import type { Analysis, AnalysisStatus, CapturedImage } from '@/app/types';
+import type { Analysis, AnalysisStatus, CapturedImage, Magnification } from '@/app/types';
 import { api } from '@/api/client';
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'sonner';
@@ -46,6 +46,10 @@ const cameraSlice = createSlice({
         removeImage: (state, action: PayloadAction<CapturedImage>) => {
             state.previewImages = state.previewImages.filter((img) => img.id !== action.payload.id);
         },
+        setImageMagnification: (state, action: PayloadAction<{ id: string; magnification: Magnification }>) => {
+            const image = state.previewImages.find((img) => img.id === action.payload.id);
+            if (image) image.magnification = action.payload.magnification;
+        },
         clearImages: (state) => {
             state.previewImages = [];
             state.analysis = null;
@@ -76,6 +80,6 @@ const cameraSlice = createSlice({
     },
 });
 
-export const { addImage, removeImage, clearImages, setUploadProgress } = cameraSlice.actions;
+export const { addImage, removeImage, setImageMagnification, clearImages, setUploadProgress } = cameraSlice.actions;
 
 export default cameraSlice.reducer;

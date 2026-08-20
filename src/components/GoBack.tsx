@@ -1,6 +1,6 @@
 import { ArrowLeftIcon } from 'lucide-react';
 import { Button } from './ui/button';
-import { ROUTES } from '@/lib/constants';
+import { ROUTES } from '@/app/constants';
 import { useNavigate, useLocation } from 'react-router';
 import type { ReactNode } from 'react';
 

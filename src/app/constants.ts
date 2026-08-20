@@ -1,7 +1,18 @@
-import type { CellType } from './types';
+import type { CellType, Magnification } from './types';
 import rbc from '../../public/rbc.png';
 import wbc from '../../public/wbc.png';
 import platelet from '../../public/platelet.png';
+
+export const ROUTES = {
+    HOME: '/',
+    HISTORY: '/history',
+    CAMERA: '/camera',
+    REVIEW: '/review',
+    RESULTS: '/results',
+    BATCH: '/batch',
+} as const;
+
+export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];
 
 export const CELLS: Record<CellType, CellType> = {
     WBC: 'WBC',
@@ -45,3 +56,7 @@ export const CELL_META: Record<
 };
 
 export const MAX_IMAGES_PER_ANALYSIS = 10;
+
+export const MAGNIFICATIONS: Magnification[] = ['4x', '10x', '40x', '100x'];
+
+export const DEFAULT_MAGNIFICATION: Magnification = '100x';

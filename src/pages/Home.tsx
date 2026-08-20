@@ -3,7 +3,7 @@ import type { CapturedImage } from '@/app/types';
 import HomeCard from '@/features/home/HomeCard';
 import { Button } from '@/components/ui/button';
 import { addImage, clearImages } from '@/features/camera/cameraSlice';
-import { ROUTES } from '@/lib/constants';
+import { ROUTES } from '@/app/constants';
 import { CameraIcon, ImagesIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
@@ -12,7 +12,7 @@ import { Link, useNavigate } from 'react-router';
 import { getBatches, selectBatchesLoading, selectRecentBatches } from '@/features/batches/batchesSlice';
 import { Spinner } from '@/components/ui/spinner';
 import { Separator } from '@/components/ui/separator';
-import { MAX_IMAGES_PER_ANALYSIS } from '@/app/constants';
+import { DEFAULT_MAGNIFICATION, MAX_IMAGES_PER_ANALYSIS } from '@/app/constants';
 
 export function Home() {
     const recent = useAppSelector(selectRecentBatches);
@@ -59,6 +59,7 @@ export function Home() {
                     id: crypto.randomUUID(),
                     previewUrl: URL.createObjectURL(file),
                     type: file.type,
+                    magnification: DEFAULT_MAGNIFICATION,
                 };
                 dispatch(addImage(image));
             });

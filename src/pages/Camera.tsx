@@ -1,10 +1,10 @@
-import { MAX_IMAGES_PER_ANALYSIS } from '@/app/constants';
+import { DEFAULT_MAGNIFICATION, MAX_IMAGES_PER_ANALYSIS } from '@/app/constants';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import type { CapturedImage } from '@/app/types';
 import GoBack from '@/components/GoBack';
 import { Button } from '@/components/ui/button';
 import { addImage } from '@/features/camera/cameraSlice';
-import { ROUTES } from '@/lib/constants';
+import { ROUTES } from '@/app/constants';
 import { ArrowRightIcon, ImagesIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
@@ -81,6 +81,7 @@ const Camera = () => {
                     id,
                     previewUrl: URL.createObjectURL(blob),
                     type: blob.type,
+                    magnification: DEFAULT_MAGNIFICATION,
                 };
 
                 dispatch(addImage(image));

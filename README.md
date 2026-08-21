@@ -8,13 +8,6 @@ cells, and platelets; drawing labeled bounding boxes and reporting counts per fi
 > It does not perform a clinical differential or produce diagnostic values.
 > See [Scope & limitations](#scope--limitations).
 
-<!-- Demo video: GitHub embeds a player only for videos uploaded as attachments
-     (user-attachments/assets/…), not for files linked by a raw repo URL —
-     raw.githubusercontent.com serves them as downloads. To embed a real inline
-     player, edit this README on github.com, drag public/milodetectsv1.webm into the
-     editor, and paste the user-attachments URL GitHub inserts on its own line here
-     in place of the link below. -->
-
 **▶ [Watch the demo](https://github.com/julio22b/milodetects-frontend/blob/master/public/milodetectsv1.webm)**
 
 <p align="center">

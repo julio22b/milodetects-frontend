@@ -1,9 +1,3 @@
-
-
-https://github.com/user-attachments/assets/90e10c9d-fa9c-4607-9b8c-1b58fddcdce0
-
-
-
 # MiloDetects
 
 An assistive tool for blood smear analysis. Photograph a microscope field and
@@ -14,7 +8,7 @@ cells, and platelets; drawing labeled bounding boxes and reporting counts per fi
 > It does not perform a clinical differential or produce diagnostic values.
 > See [Scope & limitations](#scope--limitations).
 
-**▶ [Watch the demo](https://github.com/julio22b/milodetects-frontend/blob/master/public/milodetectsv1.webm)**
+https://github.com/user-attachments/assets/90e10c9d-fa9c-4607-9b8c-1b58fddcdce0
 
 <p align="center">
   <img src="./public/detection-viewer.png" alt="Labeled cells over a blood smear field" width="300" />

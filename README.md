@@ -1,3 +1,9 @@
+
+
+https://github.com/user-attachments/assets/90e10c9d-fa9c-4607-9b8c-1b58fddcdce0
+
+
+
 # MiloDetects
 
 An assistive tool for blood smear analysis. Photograph a microscope field and

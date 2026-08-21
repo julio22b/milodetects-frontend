@@ -85,9 +85,11 @@ const DetectionViewer = ({ images }: DetectionViewerProps) => {
                     );
                 })}
 
-                <span className='absolute bottom-3 left-1/2 -translate-x-1/2 rounded bg-black/60 px-2 py-1 text-xs font-medium text-white backdrop-blur'>
-                    {fieldInViewFinder.magnification}
-                </span>
+                {fieldInViewFinder.magnification && (
+                    <span className='absolute bottom-3 left-1/2 -translate-x-1/2 rounded bg-black/60 px-2 py-1 text-xs font-medium text-white backdrop-blur'>
+                        {fieldInViewFinder.magnification}
+                    </span>
+                )}
             </div>
 
             <p className='text-sm text-muted-foreground'>Tap a cell to see its confidence.</p>

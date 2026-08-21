@@ -22,7 +22,7 @@ interface ImagesGalleryProps {
 const ImagesGallery = ({ images, selectedId, onSelect, onRemove, onMagnificationChange }: ImagesGalleryProps) => {
     return (
         <div className='grid grid-cols-4 gap-2'>
-            {images.map((image, index) => (
+            {images.map((image) => (
                 <div className='flex flex-col gap-1.5' key={image.id}>
                     <div className='relative' onClick={() => onSelect(image.id)}>
                         {onRemove && images.length !== 1 && (

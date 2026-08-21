@@ -8,7 +8,11 @@ cells, and platelets; drawing labeled bounding boxes and reporting counts per fi
 > It does not perform a clinical differential or produce diagnostic values.
 > See [Scope & limitations](#scope--limitations).
 
-![Demo video](./public/milodetectsv1.webm)
+<video src="https://github.com/julio22b/milodetects-frontend/raw/master/public/milodetectsv1.webm" controls muted loop>
+  Your browser can't play this video.
+  <a href="https://github.com/julio22b/milodetects-frontend/raw/master/public/milodetectsv1.webm">watch the demo</a>.
+</video>
+
 ![Detection screen](./public/detection-viewer.png)
 
 **Live demo:** https://milodetects-frontend.vercel.app/

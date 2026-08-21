@@ -8,12 +8,18 @@ cells, and platelets; drawing labeled bounding boxes and reporting counts per fi
 > It does not perform a clinical differential or produce diagnostic values.
 > See [Scope & limitations](#scope--limitations).
 
-<video src="https://raw.githubusercontent.com/julio22b/milodetects-frontend/master/public/milodetectsv1.webm" controls muted loop style="max-width:640px; width:100%; height:auto;" poster="./public/detection-viewer.png">
-  Your browser can't play this video.
-  <a href="https://raw.githubusercontent.com/julio22b/milodetects-frontend/master/public/milodetectsv1.webm">watch the demo</a>.
-</video>
+<!-- Demo video: GitHub embeds a player only for videos uploaded as attachments
+     (user-attachments/assets/…), not for files linked by a raw repo URL —
+     raw.githubusercontent.com serves them as downloads. To embed a real inline
+     player, edit this README on github.com, drag public/milodetectsv1.webm into the
+     editor, and paste the user-attachments URL GitHub inserts on its own line here
+     in place of the link below. -->
 
-![Detection screen](./public/detection-viewer.png)
+**▶ [Watch the demo](https://github.com/julio22b/milodetects-frontend/blob/master/public/milodetectsv1.webm)**
+
+<p align="center">
+  <img src="./public/detection-viewer.png" alt="Labeled cells over a blood smear field" width="300" />
+</p>
 
 **Live demo:** https://milodetects-frontend.vercel.app/
 **Backend repo:** https://github.com/julio22b/milodetects-backend

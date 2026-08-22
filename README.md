@@ -11,18 +11,15 @@ cells, and platelets; drawing labeled bounding boxes and reporting counts per fi
 <!-- Demo video is a GitHub attachment URL (user-attachments/assets/…); re-upload the
      file via the README editor if the link ever breaks — raw repo URLs won't embed. -->
 
-<table>
-  <tr>
-    <td align="center" valign="top" width="50%">
-      <video src="https://github.com/user-attachments/assets/90e10c9d-fa9c-4607-9b8c-1b58fddcdce0" controls muted width="300"></video>
-      <br /><sub><b>Capture → analyze</b></sub>
-    </td>
-    <td align="center" valign="top" width="50%">
-      <img src="./public/detection-viewer.png" alt="Labeled cells over a blood smear field" width="300" />
-      <br /><sub><b>Detection screen</b></sub>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <video src="https://github.com/user-attachments/assets/90e10c9d-fa9c-4607-9b8c-1b58fddcdce0" controls muted width="300"></video>
+  <br /><sub><b>Capture → analyze</b></sub>
+</p>
+
+<p align="center">
+  <img src="./public/detection-viewer.png" alt="Labeled cells over a blood smear field" width="300" />
+  <br /><sub><b>Detection screen</b></sub>
+</p>
 
 **Live demo:** https://milodetects-frontend.vercel.app/
 **Backend repo:** https://github.com/julio22b/milodetects-backend
